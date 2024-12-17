@@ -175,12 +175,26 @@ const Page = () => {
             <div className="bg-white rounded-lg shadow-md p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Course Materials</h3>
               <ul className="space-y-2">
+                {/* TODO Course syllabus */}
                 <li>
                   <a href="#" className="text-blue-600 hover:underline flex items-center">
                     <FileText className="w-4 h-4 mr-2" />
                     Course Syllabus
                   </a>
                 </li>
+                {/* Textbook */}
+                <li>
+                <a 
+                  href="https://www.packtpub.com/en-us/product/modern-computer-vision-with-pytorch-9781839213472" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-blue-600 hover:underline flex items-center"
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Modern Computer Vision with PyTorch
+                </a>
+              </li>
+                {/* Three Blue One Brown NN Playlist */}
                 <li>
                 <a 
                   href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi" 
