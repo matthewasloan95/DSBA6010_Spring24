@@ -2,7 +2,7 @@
   "name": "course-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://matthewasloan95.github.io",
+  "homepage": "https://matthewasloan95.github.io/DSBA6010_Spring24",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "touch out/.nojekyll && gh-pages -d out -t true",
