@@ -8,7 +8,6 @@ import { ImportantDates } from '../components/ImportantDates';
 import type { ImportantDate } from '../types/course'; 
 
 const Page = () => {
-  const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [expandedWeek, setExpandedWeek] = useState<number | null>(null);
 
   // Organize content by weeks
