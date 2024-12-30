@@ -1,0 +1,53 @@
+[
+    {
+      "week": 1,
+      "title": "Deep Learning Recap / Intro to CV",
+      "subHeaders": ["Context Module Sub Header"],
+      "materials": [
+        {
+          "type": "ExternalUrl",
+          "name": "Part 1 | But what is a neural network?",
+          "url": "https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&index=1",
+          "description": "3Blue1Brown video on neural networks... 3B1B is great..."
+        },
+        {
+          "type": "Attachment",
+          "name": "NN Example.xlsx",
+          "file": "/DSBA6010_Spring24/course_files/excel/NN Example.xlsx",
+          "description": "Excel file with a simple neural network example"
+        }
+      ],
+      "labs": [
+        {
+          "name": "Lab 1: Chapter1_edit.ipynb",
+          "file": "https://instructure.charlotte.edu/courses/212415/files/23769287/download?download_frd=1"
+        },
+        {
+          "name": "Lab 2: Pytorch_tensors_student.ipynb",
+          "file": "https://instructure.charlotte.edu/courses/212415/files/23769288/download?download_frd=1"
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "title": "Advanced Deep Learning / Image Classification",
+      "subHeaders": ["Context Module Sub Header"],
+      "materials": [
+        {
+          "type": "Attachment",
+          "name": "CNN Tracing.xlsx",
+          "file": "path/to/CNN_Tracing.xlsx"
+        }
+      ],
+      "labs": [
+        {
+          "name": "Lab 4: Pytorch_neural_networks.ipynb",
+          "file": "https://instructure.charlotte.edu/courses/212415/files/23890182/download?download_frd=1"
+        },
+        {
+          "name": "Lab 5: CNN_Lab_Student.ipynb",
+          "file": "https://instructure.charlotte.edu/courses/212415/files/23866404/download?download_frd=1"
+        }
+      ]
+    }
+  ]
