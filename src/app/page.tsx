@@ -102,7 +102,11 @@ export default function Page() {
                         {week.materials.map((material, idx) => (
                           <a
                             key={idx}
-                            href={material.type === 'ExternalUrl' && material.url ? material.url : material.file}
+                            href={
+                              material.type === 'ExternalUrl' 
+                                ? (material as { url: string }).url 
+                                : (material as { file: string }).file
+                            }
                             className="block p-2 bg-white rounded hover:bg-blue-50 transition-colors"
                           >
                             <div className="flex items-center space-x-2">
