@@ -5,7 +5,7 @@
 import { useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp, Book, Calendar, FileText, Notebook, Link2, ExternalLink } from 'lucide-react';
 import { ImportantDates } from '../components/ImportantDates';
-import type { ImportantDate } from '../types/course';
+import type { ImportantDate, Material, MaterialType } from '../types/course';
 import dates from '../data/dates.json';
 import weeks from '../data/weeks.json';
 import resources from '../data/resources.json';
@@ -99,13 +99,13 @@ export default function Page() {
                     <div className="mb-4">
                       <h4 className="font-medium text-gray-900 mb-2">Materials</h4>
                       <div className="grid gap-2">
-                        {week.materials.map((material, idx) => (
+                        {week.materials.map((material: Material, idx) => (
                           <a
                             key={idx}
                             href={
                               material.type === 'ExternalUrl' 
-                                ? (material as { url: string }).url 
-                                : (material as { file: string }).file
+                                ? (material as { type: 'ExternalUrl'; url: string }).url 
+                                : (material as { type: Exclude<MaterialType, 'ExternalUrl'>; file: string }).file
                             }
                             className="block p-2 bg-white rounded hover:bg-blue-50 transition-colors"
                           >
@@ -116,9 +116,9 @@ export default function Page() {
                               }
                               <span className="text-gray-900">{material.name}</span>
                             </div>
-                            {material.description && (
+                            {(material as { description?: string }).description && (
                               <p className="mt-1 ml-6 text-sm text-gray-600">
-                                {material.description}
+                                {(material as { description: string }).description}
                               </p>
                             )}
                           </a>
