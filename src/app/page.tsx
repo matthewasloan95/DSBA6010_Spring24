@@ -7,7 +7,7 @@ import { ChevronDown, ChevronUp, Book, Calendar, FileText, Notebook, ExternalLin
 import { ImportantDates } from '../components/ImportantDates';
 import type { ImportantDate, Material, Module } from '../types/course';
 import dates from '../data/dates.json';
-// import resources from '../data/resources.json';
+import resources from '../data/resources.json';
 import assignmentsData from '../data/assignments.json';
 import type { Assignment } from '../types/course';
 import { hasDescription } from '../types/course';
@@ -170,11 +170,32 @@ export default function Page() {
                   href={assignment.file}
                   className="block p-4 hover:bg-gray-50 transition-colors"
                 >
-                  {/* Assignment Content */}
+                  <span>{assignment.name}</span>
                 </a>
               ))}
             </div>
           </div>
+        </section>
+
+        {/* Resources */}
+        <section id="resources" className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center">
+            <ExternalLink className="mr-2" /> Resources
+          </h2>
+          {resources.sections.map((section, idx) => (
+            <div key={idx} className="mb-4">
+              <h3 className="text-xl font-semibold mb-2">{section.title}</h3>
+              <ul className="list-disc list-inside">
+                {section.items.map((item, itemIdx) => (
+                  <li key={itemIdx}>
+                    <a href={item.url} className="text-blue-600 hover:underline">
+                      {item.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </section>
       </main>
     </div>
