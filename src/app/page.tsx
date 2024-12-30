@@ -33,7 +33,7 @@ export default function Page() {
       .then(res => res.text())
       .then(data => setDescriptionText(data));
 
-  }, [basePath])
+  }, [])
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Nav bar */}
@@ -104,7 +104,7 @@ export default function Page() {
                         {week.materials.map((material, idx) => (
                           <a
                             key={idx}
-                            href={material.type === 'ExternalUrl' ? material.url : material.file}
+                            href={material.type === 'ExternalUrl' && material.url ? material.url : material.file}
                             className="block p-2 bg-white rounded hover:bg-blue-50 transition-colors"
                           >
                             <div className="flex items-center space-x-2">
