@@ -1,59 +1,79 @@
 // src/app/page.tsx
+
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp, Book, Calendar, FileText, Notebook, Link2, ExternalLink } from 'lucide-react';
-import { courseModules, assignments } from '../data/courseContent';
 import { ImportantDates } from '../components/ImportantDates';
-import type { ImportantDate } from '../types/course'; 
+import type { ImportantDate, Module } from '../types/course';
+import dates from '../data/dates.json';
+import weeks from '../data/weeks.json';
+import resources from '../data/resources.json';
+import assignments from '../data/assignments.json';
 
-const Page = () => {
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
+export default function Page() {
+  const [headerText, setHeaderText] = useState('');
+  const [titleText, setTitleText] = useState('');
+  const [descriptionText, setDescriptionText] = useState('');
   const [expandedWeek, setExpandedWeek] = useState<number | null>(null);
 
-  // Organize content by weeks
-  const weeks = [
-    { week: 1, title: "Deep Learning Fundamentals", content: courseModules[1] },
-    { week: 2, title: "Neural Networks & PyTorch", content: courseModules[2] },
-    // { week: 3, title: "Advanced Deep Learning", content: courseModules[2] },
-    // { week: 4, title: "CNN Architecture", content: courseModules[3] }
-  ];
+  useEffect(() => {
+    // Fetch text content
+    fetch(`/DSBA6010_Spring24/course_files/content/header.txt`)
+      .then(res => res.text())
+      .then(data => setHeaderText(data));
 
+    fetch(`/DSBA6010_Spring24/course_files/content/title.txt`)
+      .then(res => res.text())
+      .then(data => setTitleText(data));
+
+    fetch(`/DSBA6010_Spring24/course_files/content/description.txt`)
+      .then(res => res.text())
+      .then(data => setDescriptionText(data));
+
+  }, [basePath])
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
+      {/* Nav bar */}
       <nav className="bg-gray-900 text-white p-4 sticky top-0 z-50 shadow-lg">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">ACV Course Content</h1>
+          {/* HEADER */}
+          <div className="text-2xl font-bold" dangerouslySetInnerHTML={{ __html: headerText }}></div>
           <div className="space-x-8">
-            <a href="#schedule" className="hover:text-blue-300 transition-colors">Schedule</a>
-            <a href="#assignments" className="hover:text-blue-300 transition-colors">Assignments</a>
-            <a href="#resources" className="hover:text-blue-300 transition-colors">Resources</a>
+            <a href="#schedule" className="hover:text-blue-300 transition-colors">
+              Schedule
+            </a>
+            <a href="#assignments" className="hover:text-blue-300 transition-colors">
+              Assignments
+            </a>
+            <a href="#resources" className="hover:text-blue-300 transition-colors">
+              Resources
+            </a>
           </div>
         </div>
       </nav>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Course Header */}
+        {/* Main content */}
+        {/* TITLE */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">DSBA 6010 - Applied Computer Vision</h1>
-          <p className="text-gray-600">Rick Chakra - rchakra4@charlotte.edu - Office Hours - etc</p>
-          <p className="text-gray-600">Matt Sloan - msloan16@charlotte.edu - Office Hours - etc</p>
-          <p className="text-gray-600"> Meets Thursdays @ 05:30 PM - 08:15 PM @ Uptown, Dubois 606</p>
-          
+          <div className="text-3xl font-bold text-gray-900 mb-2" dangerouslySetInnerHTML={{ __html: titleText }}></div>
+          {descriptionText.split('\n').map((line, i) => (
+            <p key={i} className="text-gray-600">
+              {line}
+            </p>
+          ))}
         </div>
 
         {/* Important Dates */}
         <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center">
-          <Calendar className="mr-2" /> Course Schedule
-        </h2>
-        <ImportantDates 
-          dates={courseModules.reduce((acc, module) => 
-            module.importantDates ? [...acc, ...module.importantDates] : acc, 
-            [] as ImportantDate[]
-          )} 
-        />
-      </section>
+          <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center">
+            <Calendar className="mr-2" /> Course Schedule
+          </h2>
+          <ImportantDates dates={dates as ImportantDate[]} />
+        </section>
 
         {/* Weekly Schedule */}
         <section id="schedule" className="mb-12">
@@ -81,7 +101,7 @@ const Page = () => {
                     <div className="mb-4">
                       <h4 className="font-medium text-gray-900 mb-2">Materials</h4>
                       <div className="grid gap-2">
-                        {week.content.materials.map((material, idx) => (
+                        {week.materials.map((material, idx) => (
                           <a
                             key={idx}
                             href={material.url || material.file}
@@ -103,13 +123,13 @@ const Page = () => {
                         ))}
                       </div>
                     </div>
-              
+
                     {/* Labs */}
-                    {week.content.labs && (
+                    {week.labs && (
                       <div className="mb-4">
                         <h4 className="font-medium text-gray-900 mb-2">Labs</h4>
                         <div className="grid gap-2">
-                          {week.content.labs.map((lab, idx) => (
+                          {week.labs.map((lab, idx) => (
                             <a
                               key={idx}
                               href={lab.file}
@@ -155,64 +175,32 @@ const Page = () => {
             <Link2 className="mr-2" /> Resources
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">External Resources</h3>
-              <ul className="space-y-2">
-                {/* Pytorch Tutorials */}
-                <li>
-                <a 
-                  href="https://pytorch.org/tutorials/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-blue-600 hover:underline flex items-center"
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  PyTorch Tutorials
-                </a>
-              </li>
-              </ul>
-            </div>
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Course Materials</h3>
-              <ul className="space-y-2">
-                {/* TODO Course syllabus */}
-                <li>
-                  <a href="#" className="text-blue-600 hover:underline flex items-center">
-                    <FileText className="w-4 h-4 mr-2" />
-                    Course Syllabus
-                  </a>
-                </li>
-                {/* Textbook */}
-                <li>
-                <a 
-                  href="https://www.packtpub.com/en-us/product/modern-computer-vision-with-pytorch-9781839213472" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-blue-600 hover:underline flex items-center"
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Modern Computer Vision with PyTorch
-                </a>
-              </li>
-                {/* Three Blue One Brown NN Playlist */}
-                <li>
-                <a 
-                  href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-blue-600 hover:underline flex items-center"
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Three Blue One Brown (NN playlist)
-                </a>
-              </li>
-              </ul>
-            </div>
+            {resources.sections.map((section, idx) => (
+              <div key={idx} className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">{section.title}</h3>
+                <ul className="space-y-2">
+                  {section.items.map((item, itemIdx) => (
+                    <li key={itemIdx}>
+                      <a
+                        href={item.url}
+                        target={item.type === 'external' ? "_blank" : undefined}
+                        rel={item.type === 'external' ? "noopener noreferrer" : undefined}
+                        className="text-blue-600 hover:underline flex items-center"
+                      >
+                        {item.type === 'external' ? 
+                          <ExternalLink className="w-4 h-4 mr-2" /> : 
+                          <FileText className="w-4 h-4 mr-2" />
+                        }
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </section>
       </main>
     </div>
   );
-};
-
-export default Page;
+}
