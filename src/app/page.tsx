@@ -104,7 +104,7 @@ export default function Page() {
                           return (
                             <a
                               key={idx}
-                              href={isExternalUrl ? material.url : material.file}
+                              href={material.type === 'ExternalUrl' ? material.url : material.file}
                               className="block p-2 bg-white rounded hover:bg-blue-50 transition-colors"
                             >
                               <div className="flex items-center space-x-2">
