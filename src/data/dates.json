@@ -1,0 +1,38 @@
+[
+  {
+    "date": "2025-01-13",
+    "title": "First Day of Classes using dates.json",
+    "type": "class",
+    "description": ""
+  },
+  {
+    "date": "2025-01-21",
+    "title": "Last day to add/drop",
+    "type": "deadline",
+    "description": ""
+  },
+  {
+    "date": "2025-03-03",
+    "title": "Start Spring Break!",
+    "type": "holiday",
+    "description": "Spring break starts today! March 3 - March 8"
+  },
+  {
+    "date": "2025-03-08",
+    "title": "End Spring Break",
+    "type": "holiday",
+    "description": ""
+  },
+  {
+    "date": "2025-03-17",
+    "title": "Final day to withdraw",
+    "type": "deadline",
+    "description": "\"March 17, 2025 Last day to withdraw from course(s); grade subject to Withdrawal Policy\""
+  },
+  {
+    "date": "2025-04-24",
+    "title": "Our Final Day of Class",
+    "type": "class",
+    "description": ""
+  }
+]
