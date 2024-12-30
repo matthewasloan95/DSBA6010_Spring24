@@ -5,7 +5,7 @@
 import { useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp, Book, Calendar, FileText, Notebook, Link2, ExternalLink } from 'lucide-react';
 import { ImportantDates } from '../components/ImportantDates';
-import type { ImportantDate, Module } from '../types/course';
+import type { ImportantDate } from '../types/course';
 import dates from '../data/dates.json';
 import weeks from '../data/weeks.json';
 import resources from '../data/resources.json';
