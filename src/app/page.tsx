@@ -1,14 +1,13 @@
 // src/app/page.tsx
 
-'use client';
+"use client";
 
 import { useEffect, useState } from 'react';
-import { ChevronDown, ChevronUp, Book, Calendar, FileText, Notebook, Link2, ExternalLink } from 'lucide-react';
+import { ChevronDown, ChevronUp, Book, Calendar, FileText, Notebook, ExternalLink } from 'lucide-react';
 import { ImportantDates } from '../components/ImportantDates';
-import type { ImportantDate, Material } from '../types/course';
+import type { ImportantDate, Material, Module } from '../types/course';
 import dates from '../data/dates.json';
-import weeks from '../data/weeks.json';
-import resources from '../data/resources.json';
+// import resources from '../data/resources.json';
 import assignmentsData from '../data/assignments.json';
 import type { Assignment } from '../types/course';
 import { hasDescription } from '../types/course';
@@ -20,6 +19,7 @@ export default function Page() {
   const [titleText, setTitleText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
   const [expandedWeek, setExpandedWeek] = useState<number | null>(null);
+  const [weeks, setWeeks] = useState<Module[]>([]); // Ensure correct typing
 
   useEffect(() => {
     // Fetch text content
@@ -35,7 +35,12 @@ export default function Page() {
       .then(res => res.text())
       .then(data => setDescriptionText(data));
 
-  }, [])
+    // Fetch weeks data with proper typing
+    fetch(`/DSBA6010_Spring24/course_files/content/weeks.json`)
+      .then(res => res.json())
+      .then((data: Module[]) => setWeeks(data));
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Nav bar */}
@@ -106,11 +111,15 @@ export default function Page() {
                         {week.materials.map((material: Material, idx) => (
                           <a
                             key={idx}
-                            href={material.url || material.file}
+                            href={material.type === 'ExternalUrl' ? material.url : material.file}
                             className="block p-2 bg-white rounded hover:bg-blue-50 transition-colors"
                           >
                             <div className="flex items-center space-x-2 text-gray-900">
-                              {material.type === 'ExternalUrl' ? <ExternalLink className="w-4 h-4 mr-2" /> : <FileText className="w-4 h-4 mr-2" />}
+                              {material.type === 'ExternalUrl' ? (
+                                <ExternalLink className="w-4 h-4 mr-2" />
+                              ) : (
+                                <FileText className="w-4 h-4 mr-2" />
+                              )}
                               <span>{material.name}</span>
                             </div>
                             {hasDescription(material) && (
@@ -161,42 +170,10 @@ export default function Page() {
                   href={assignment.file}
                   className="block p-4 hover:bg-gray-50 transition-colors"
                 >
-                  <h3 className="text-lg font-medium text-gray-900">{assignment.name}</h3>
+                  {/* Assignment Content */}
                 </a>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Resources */}
-        <section id="resources" className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center">
-            <Link2 className="mr-2" /> Resources
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {resources.sections.map((section, idx) => (
-              <div key={idx} className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">{section.title}</h3>
-                <ul className="space-y-2">
-                  {section.items.map((item, itemIdx) => (
-                    <li key={itemIdx}>
-                      <a
-                        href={item.url}
-                        target={item.type === 'external' ? "_blank" : undefined}
-                        rel={item.type === 'external' ? "noopener noreferrer" : undefined}
-                        className="text-blue-600 hover:underline flex items-center"
-                      >
-                        {item.type === 'external' ? 
-                          <ExternalLink className="w-4 h-4 mr-2" /> : 
-                          <FileText className="w-4 h-4 mr-2" />
-                        }
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
           </div>
         </section>
       </main>

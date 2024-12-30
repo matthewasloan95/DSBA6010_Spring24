@@ -31,6 +31,7 @@ export interface ImportantDate {
 }
 
 export interface Module {
+  week: number;
   title: string;
   subHeaders: string[];
   materials: Material[];
@@ -43,7 +44,7 @@ export interface Assignment {
   name: string;
   file?: string;
   description?: string;
-};
+}
 
 export function hasDescription(material: Material): material is Material & { description: string } {
   return typeof material.description === 'string';
