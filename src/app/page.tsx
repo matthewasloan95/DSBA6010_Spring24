@@ -168,9 +168,10 @@ export default function Page() {
                 <a
                   key={idx}
                   href={assignment.file}
-                  className="block p-4 hover:bg-gray-50 transition-colors"
+                  className="block p-4 hover:bg-gray-50 transition-colors flex items-center"
                 >
-                  <span>{assignment.name}</span>
+                  <Book className="w-5 h-5 text-blue-600 mr-3" />
+                  <span className="text-gray-900">{assignment.name}</span>
                 </a>
               ))}
             </div>
@@ -183,9 +184,9 @@ export default function Page() {
             <ExternalLink className="mr-2" /> Resources
           </h2>
           {resources.sections.map((section, idx) => (
-            <div key={idx} className="mb-4">
-              <h3 className="text-xl font-semibold mb-2">{section.title}</h3>
-              <ul className="list-disc list-inside">
+            <div key={idx} className="mb-6">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">{section.title}</h3>
+              <ul className="list-disc list-inside space-y-1">
                 {section.items.map((item, itemIdx) => (
                   <li key={itemIdx}>
                     <a href={item.url} className="text-blue-600 hover:underline">
