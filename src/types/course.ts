@@ -1,11 +1,13 @@
 // src/types/course.ts
+export type MaterialType = 'ExternalUrl' | 'Attachment' | 'pdf' | 'notebook' | 'excel' | 'zip' | 'video';
+
 export type Material = {
-  type: string;
+  type: MaterialType;
   name: string;
   description?: string;
 } & (
-  | { type: 'ExternalUrl'; url: string; }
-  | { type: string; file: string; }
+  | { type: 'ExternalUrl'; url: string; file?: never; }
+  | { type: Exclude<MaterialType, 'ExternalUrl'>; file: string; url?: never; }
 );
 
 export interface Lab {
