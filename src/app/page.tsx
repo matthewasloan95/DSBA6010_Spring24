@@ -11,8 +11,6 @@ import weeks from '../data/weeks.json';
 import resources from '../data/resources.json';
 import assignments from '../data/assignments.json';
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-
 export default function Page() {
   const [headerText, setHeaderText] = useState('');
   const [titleText, setTitleText] = useState('');
