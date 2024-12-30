@@ -1,4 +1,5 @@
 // src/types/course.ts
+
 export type MaterialType = 'ExternalUrl' | 'Attachment' | 'pdf' | 'notebook' | 'excel' | 'zip' | 'video';
 
 export type Material = {
@@ -43,3 +44,7 @@ export interface Assignment {
   file?: string;
   description?: string;
 };
+
+export function hasDescription(material: Material): material is Material & { description: string } {
+  return typeof material.description === 'string';
+}

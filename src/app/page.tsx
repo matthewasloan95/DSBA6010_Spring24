@@ -5,11 +5,15 @@
 import { useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp, Book, Calendar, FileText, Notebook, Link2, ExternalLink } from 'lucide-react';
 import { ImportantDates } from '../components/ImportantDates';
-import type { ImportantDate } from '../types/course';
+import type { ImportantDate, Material } from '../types/course';
 import dates from '../data/dates.json';
 import weeks from '../data/weeks.json';
 import resources from '../data/resources.json';
-import assignments from '../data/assignments.json';
+import assignmentsData from '../data/assignments.json';
+import type { Assignment } from '../types/course';
+import { hasDescription } from '../types/course';
+
+const assignments: Assignment[] = assignmentsData as Assignment[];
 
 export default function Page() {
   const [headerText, setHeaderText] = useState('');
@@ -99,29 +103,23 @@ export default function Page() {
                     <div className="mb-4">
                       <h4 className="font-medium text-gray-900 mb-2">Materials</h4>
                       <div className="grid gap-2">
-                        {week.materials.map((material, idx) => {
-                          const isExternalUrl = material.type === 'ExternalUrl';
-                          return (
-                            <a
-                              key={idx}
-                              href={isExternalUrl ? (material as { url: string }).url : material.file}
-                              className="block p-2 bg-white rounded hover:bg-blue-50 transition-colors"
-                            >
-                              <div className="flex items-center space-x-2">
-                                {isExternalUrl ? 
-                                  <ExternalLink className="text-blue-600 flex-shrink-0" /> : 
-                                  <FileText className="text-gray-600 flex-shrink-0" />
-                                }
-                                <span className="text-gray-900">{material.name}</span>
-                              </div>
-                              {material.description && (
-                                <p className="mt-1 ml-6 text-sm text-gray-600">
-                                  {material.description}
-                                </p>
-                              )}
-                            </a>
-                          );
-                        })}
+                        {week.materials.map((material: Material, idx) => (
+                          <a
+                            key={idx}
+                            href={material.url || material.file}
+                            className="block p-2 bg-white rounded hover:bg-blue-50 transition-colors"
+                          >
+                            <div className="flex items-center space-x-2 text-gray-900">
+                              {material.type === 'ExternalUrl' ? <ExternalLink className="w-4 h-4 mr-2" /> : <FileText className="w-4 h-4 mr-2" />}
+                              <span>{material.name}</span>
+                            </div>
+                            {hasDescription(material) && (
+                              <p className="mt-1 ml-6 text-sm text-gray-600">
+                                {material.description}
+                              </p>
+                            )}
+                          </a>
+                        ))}
                       </div>
                     </div>
 
