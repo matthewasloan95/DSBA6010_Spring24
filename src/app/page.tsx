@@ -99,30 +99,29 @@ export default function Page() {
                     <div className="mb-4">
                       <h4 className="font-medium text-gray-900 mb-2">Materials</h4>
                       <div className="grid gap-2">
-                        {week.materials.map((material: Material, idx) => (
-                          <a
-                            key={idx}
-                            href={
-                              material.type === 'ExternalUrl' 
-                                ? (material as { type: 'ExternalUrl'; url: string }).url 
-                                : (material as { type: Exclude<MaterialType, 'ExternalUrl'>; file: string }).file
-                            }
-                            className="block p-2 bg-white rounded hover:bg-blue-50 transition-colors"
-                          >
-                            <div className="flex items-center space-x-2">
-                              {material.type === 'ExternalUrl' ? 
-                                <ExternalLink className="text-blue-600 flex-shrink-0" /> : 
-                                <FileText className="text-gray-600 flex-shrink-0" />
-                              }
-                              <span className="text-gray-900">{material.name}</span>
-                            </div>
-                            {(material as { description?: string }).description && (
-                              <p className="mt-1 ml-6 text-sm text-gray-600">
-                                {(material as { description: string }).description}
-                              </p>
-                            )}
-                          </a>
-                        ))}
+                        {week.materials.map((material, idx) => {
+                          const isExternalUrl = material.type === 'ExternalUrl';
+                          return (
+                            <a
+                              key={idx}
+                              href={isExternalUrl ? material.url : material.file}
+                              className="block p-2 bg-white rounded hover:bg-blue-50 transition-colors"
+                            >
+                              <div className="flex items-center space-x-2">
+                                {isExternalUrl ? 
+                                  <ExternalLink className="text-blue-600 flex-shrink-0" /> : 
+                                  <FileText className="text-gray-600 flex-shrink-0" />
+                                }
+                                <span className="text-gray-900">{material.name}</span>
+                              </div>
+                              {material.description && (
+                                <p className="mt-1 ml-6 text-sm text-gray-600">
+                                  {material.description}
+                                </p>
+                              )}
+                            </a>
+                          );
+                        })}
                       </div>
                     </div>
 
