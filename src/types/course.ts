@@ -26,11 +26,11 @@ export interface Solution {
 export type ResourceIcon = 'youtube' | 'pytorch' | 'book' | 'externallink'; // Extend as needed
 
 export interface ImportantDate {
-  name: string;
+  title: string;
   type: 'class' | 'holiday' | 'deadline' | 'exam' | 'external';
   date: string;
   icon?: ResourceIcon;
-  url: string;
+  description?: string;
 }
 
 export interface Module {
@@ -58,6 +58,7 @@ export interface ResourceItem {
 
 export interface ResourceSection {
   title: string;
+  icon?: ResourceIcon;
   items: ResourceItem[];
 }
 

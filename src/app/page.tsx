@@ -11,18 +11,21 @@ import {
   FileText,
   Notebook,
   ExternalLink,
-  BookOpen,
-} from 'lucide-react'; // Retain Lucide icons for non-brand icons
-import { SiYoutube, SiPytorch } from 'react-icons/si'; // Import Simple Icons
-import { FaBook, FaExternalLinkAlt } from 'react-icons/fa'; // Import Font Awesome Icons
-import ImportantDates from '../components/ImportantDates'; // Correct import for default export
-import type { ImportantDate, Material, Module, Assignment, Resources, ResourceIcon } from '../types/course';
+  // BookOpen,
+} from 'lucide-react'; 
+import { SiYoutube, SiPytorch } from 'react-icons/si'; 
+import { FaBook, FaExternalLinkAlt } from 'react-icons/fa'; 
+import ImportantDates from '../components/ImportantDates'; 
+import type { ImportantDate, Material, Module, Assignment, ResourceIcon, Resources} from '../types/course'; // Resource
 import dates from '../data/dates.json';
-import resources from '../data/resources.json';
+// import resources from '../data/resources.json';
 import assignmentsData from '../data/assignments.json';
 import { hasDescription } from '../types/course';
+import resourcesData from '../data/resources.json';
 
+const resources: Resources = resourcesData as Resources;
 const assignments: Assignment[] = assignmentsData as Assignment[];
+
 
 const getIconForResource = (icon?: ResourceIcon) => {
   if (icon) {
