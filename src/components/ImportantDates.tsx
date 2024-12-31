@@ -1,4 +1,5 @@
 // src/components/ImportantDates.tsx
+
 import React, { useState } from 'react';
 import { Calendar, Clock, AlertCircle, BookOpen, ChevronDown, ChevronUp } from 'lucide-react';
 import { ImportantDate } from '../types/course';
@@ -16,7 +17,7 @@ const getIconForDateType = (type: ImportantDate['type']) => {
     default:
       return Calendar;
   }
-};
+}
 
 const getColorForDateType = (type: ImportantDate['type']) => {
   switch (type) {
@@ -33,12 +34,16 @@ const getColorForDateType = (type: ImportantDate['type']) => {
   }
 };
 
+const isPastDate = (date: string) => {
+  return new Date(date).getTime() < new Date().getTime();
+};
+
 export const ImportantDates = ({ dates }: { dates: ImportantDate[] }) => {
-  // Sort dates chronologically
+  const [isExpanded, setIsExpanded] = useState(false);
   const sortedDates = [...dates].sort((a, b) => 
     new Date(a.date).getTime() - new Date(b.date).getTime()
   );
-  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <button
@@ -54,7 +59,6 @@ export const ImportantDates = ({ dates }: { dates: ImportantDate[] }) => {
           <ChevronDown className="w-5 h-5 text-gray-500" />
         }
       </button>
-      
       {isExpanded && (
         <div className="divide-y divide-gray-200">
           {sortedDates.map((date, index) => {
@@ -69,19 +73,18 @@ export const ImportantDates = ({ dates }: { dates: ImportantDate[] }) => {
                   </div>
                   <div>
                     <div className="flex items-center">
-                      <h4 className="font-medium text-gray-900">{date.title}</h4>
-                      <span className="ml-2 text-sm text-gray-500">
+                      <h4 className={`font-medium text-gray-900 ${isPastDate(date.date) ? 'line-through' : ''}`}>
+                        {date.title}
+                      </h4>
+                      <span className={`ml-2 text-sm text-gray-500 ${isPastDate(date.date) ? 'line-through' : ''}`}>
                         {new Date(date.date + 'T00:00:00').toLocaleDateString('en-US', {
-                            weekday: 'long',
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
+                          weekday: 'long',
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
                         })}
                       </span>
                     </div>
-                    {date.description && (
-                      <p className="mt-1 text-sm text-gray-600">{date.description}</p>
-                    )}
                   </div>
                 </div>
               </div>
@@ -92,3 +95,5 @@ export const ImportantDates = ({ dates }: { dates: ImportantDate[] }) => {
     </div>
   );
 };
+
+export default ImportantDates;

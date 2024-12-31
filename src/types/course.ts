@@ -23,11 +23,14 @@ export interface Solution {
   description?: string;
 }
 
+export type ResourceIcon = 'youtube' | 'pytorch' | 'book' | 'externallink'; // Extend as needed
+
 export interface ImportantDate {
-  date: string;  // ISO date string
-  title: string;
-  description?: string;
-  type: 'class' | 'holiday' | 'deadline' | 'exam';
+  name: string;
+  type: 'class' | 'holiday' | 'deadline' | 'exam' | 'external';
+  date: string;
+  icon?: ResourceIcon;
+  url: string;
 }
 
 export interface Module {
@@ -44,6 +47,22 @@ export interface Assignment {
   name: string;
   file?: string;
   description?: string;
+}
+
+export interface ResourceItem {
+  name: string;
+  url: string;
+  type: 'external' | 'file';
+  icon?: ResourceIcon;
+}
+
+export interface ResourceSection {
+  title: string;
+  items: ResourceItem[];
+}
+
+export interface Resources {
+  sections: ResourceSection[];
 }
 
 export function hasDescription(material: Material): material is Material & { description: string } {

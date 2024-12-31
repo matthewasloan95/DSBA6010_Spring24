@@ -1,5 +1,11 @@
 [
   {
+    "date": "2024-01-13",
+    "title": "This is a date that has passed...",
+    "type": "class",
+    "description": ""
+  },
+  {
     "date": "2025-01-13",
     "title": "First Day of Classes using dates.json",
     "type": "class",

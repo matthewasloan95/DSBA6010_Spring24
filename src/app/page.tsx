@@ -3,16 +3,47 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { ChevronDown, ChevronUp, Book, Calendar, FileText, Notebook, ExternalLink } from 'lucide-react';
-import { ImportantDates } from '../components/ImportantDates';
-import type { ImportantDate, Material, Module } from '../types/course';
+import {
+  ChevronDown,
+  ChevronUp,
+  Book,
+  Calendar,
+  FileText,
+  Notebook,
+  ExternalLink,
+  BookOpen,
+} from 'lucide-react'; // Retain Lucide icons for non-brand icons
+import { SiYoutube, SiPytorch } from 'react-icons/si'; // Import Simple Icons
+import { FaBook, FaExternalLinkAlt } from 'react-icons/fa'; // Import Font Awesome Icons
+import ImportantDates from '../components/ImportantDates'; // Correct import for default export
+import type { ImportantDate, Material, Module, Assignment, Resources, ResourceIcon } from '../types/course';
 import dates from '../data/dates.json';
 import resources from '../data/resources.json';
 import assignmentsData from '../data/assignments.json';
-import type { Assignment } from '../types/course';
 import { hasDescription } from '../types/course';
 
 const assignments: Assignment[] = assignmentsData as Assignment[];
+
+const getIconForResource = (icon?: ResourceIcon) => {
+  if (icon) {
+    switch (icon.toLowerCase()) {
+      case 'youtube':
+        return <SiYoutube className="mr-2 w-5 h-5 text-red-600" />;
+      case 'pytorch':
+        return <SiPytorch className="mr-2 w-5 h-5 text-blue-600" />;
+      case 'book':
+        return <FaBook className="mr-2 w-5 h-5 text-green-600" />;
+      case 'externallink':
+        return <FaExternalLinkAlt className="mr-2 w-5 h-5 text-gray-600" />;
+      // Add more cases as needed
+      default:
+        return <FileText className="mr-2 w-5 h-5 text-gray-600" />;
+    }
+  }
+
+  // Default icon if none provided
+  return <FileText className="mr-2 w-5 h-5 text-gray-600" />;
+};
 
 export default function Page() {
   const [headerText, setHeaderText] = useState('');
@@ -75,9 +106,9 @@ export default function Page() {
         </div>
 
         {/* Important Dates */}
-        <section className="mb-12">
+        <section id="important-dates" className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center">
-            <Calendar className="mr-2" /> Course Schedule
+            <Calendar className="mr-2" /> Important Dates
           </h2>
           <ImportantDates dates={dates as ImportantDate[]} />
         </section>
@@ -181,14 +212,18 @@ export default function Page() {
         {/* Resources */}
         <section id="resources" className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center">
-            <ExternalLink className="mr-2" /> Resources
+            <ExternalLink className="mr-2 w-6 h-6 text-gray-900" /> Resources
           </h2>
           {resources.sections.map((section, idx) => (
             <div key={idx} className="mb-6">
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">{section.title}</h3>
+              <h3 className="text-xl font-semibold mb-2 text-gray-900 flex items-center">
+                {getIconForResource(section.icon)}
+                {section.title}
+              </h3>
               <ul className="list-disc list-inside space-y-1">
                 {section.items.map((item, itemIdx) => (
-                  <li key={itemIdx}>
+                  <li key={itemIdx} className="flex items-center">
+                    {getIconForResource(item.icon)}
                     <a href={item.url} className="text-blue-600 hover:underline">
                       {item.name}
                     </a>

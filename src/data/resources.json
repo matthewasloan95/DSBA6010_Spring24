@@ -1,44 +1,48 @@
 {
-    "sections": [
-      {
-        "title": "External Resources",
-        "items": [
-          {
-            "name": "PyTorch Tutorials",
-            "url": "https://pytorch.org/tutorials/",
-            "type": "external"
-          }
-        ]
-      },
-      {
-        "title": "Course Materials",
-        "items": [
-          {
-            "name": "Course Syllabus",
-            "url": "#",
-            "type": "file"
-          },
-          {
-            "name": "Modern Computer Vision with PyTorch",
-            "url": "https://www.packtpub.com/en-us/product/modern-computer-vision-with-pytorch-9781839213472",
-            "type": "external"
-          },
-          {
-            "name": "Three Blue One Brown (NN playlist)",
-            "url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi",
-            "type": "external"
-          }
-        ]
-      },
-      {
-        "title": "Another Example Resources",
-        "items": [
-          {
-            "name": "PyTorch Tutorials",
-            "url": "https://pytorch.org/tutorials/",
-            "type": "external"
-          }
-        ]
-      }
-    ]
-  }
+  "sections": [
+    {
+      "title": "External Resources",
+      "items": [
+        {
+          "name": "PyTorch Tutorials",
+          "url": "https://pytorch.org/tutorials/",
+          "type": "external",
+          "icon": "pytorch"
+        }
+      ]
+    },
+    {
+      "title": "Course Materials",
+      "items": [
+        {
+          "name": "Course Syllabus",
+          "url": "#",
+          "type": "file"
+        },
+        {
+          "name": "Modern Computer Vision with PyTorch",
+          "url": "https://www.packtpub.com/en-us/product/modern-computer-vision-with-pytorch-9781839213472",
+          "type": "external",
+          "icon": "book"
+        },
+        {
+          "name": "Three Blue One Brown (NN playlist)",
+          "url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi",
+          "type": "external",
+          "icon": "youtube"
+        }
+      ]
+    },
+    {
+      "title": "Another Example Resources",
+      "items": [
+        {
+          "name": "Resource Name",
+          "url": "https://example.com/resource",
+          "type": "external",
+          "icon": "externalLink"
+        }
+      ]
+    }
+  ]
+}

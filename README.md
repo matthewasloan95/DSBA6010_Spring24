@@ -21,6 +21,8 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 Additionally, there are site content files at these locations:   
 * public/course_files/content   
 * src/data   
+   
+There are lots of icons at [https://lucide.dev/icons/categories](https://lucide.dev/icons/categories)
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
